@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - UniNorte App</title>
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-shrink-0">
+        <div class="container mt-5">
+            <h1 class="mb-4">Bienvenido a la Aplicación de UniNorte</h1>
+            <p class="lead">Esta es la página de inicio de tu proyecto final de Programación I.</p>
+
+            <div sec:authorize="isAuthenticated()" class="alert alert-info">
+                ¡Hola, <span sec:authentication="name">Usuario</span>! Has iniciado sesión. Tu rol(es) es: <span sec:authentication="principal.authorities"></span>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()" class="alert alert-warning">
+                Por favor, <a th:href="@{/login}">inicia sesión</a> o <a th:href="@{/register}">regístrate</a> para acceder a todas las funcionalidades.
+            </div>
+
+            <h2>Características de la Aplicación:</h2>
+            <ul>
+                <li>Sistema de autenticación y registro de usuarios con Spring Security.</li>
+                <li>Gestión de datos con PostgreSQL y Spring Data JPA.</li>
+                <li>Interfaz de usuario diseñada con Thymeleaf y Bootstrap.</li>
+                <li>¡Próximamente: CRUD para tus otras tablas con paginación y filtros!</li>
+            </ul>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${categoria.id == null ? 'Nueva Categoría' : 'Editar Categoría'}"></title>
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="flex-shrink-0">
+        <div class="container mt-5">
+            <h1 class="mb-4" th:text="${categoria.id == null ? 'Crear Nueva Categoría' : 'Editar Categoría'}"></h1>
+
+            <form th:action="@{/categorias/guardar}" th:object="${categoria}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre de la Categoría</label>
+                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" th:errorclass="is-invalid">
+                    <div class="invalid-feedback" th:errors="*{nombre}"></div>
+                    <div th:if="${#fields.hasErrors('nombre') and #fields.hasGlobalErrors()}" class="alert alert-danger mt-2" role="alert">
+                        <span th:each="err : ${#fields.errors('nombre')}" th:text="${err}"></span>
+                        <span th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a th:href="@{/categorias}" class="btn btn-secondary me-md-2">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Guardar Categoría</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
